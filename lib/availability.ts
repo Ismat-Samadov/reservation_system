@@ -1,6 +1,6 @@
 import { prisma } from './prisma'
 import { addMinutes, parse, startOfDay, endOfDay } from 'date-fns'
-import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
+import { toZonedTime, fromZonedTime } from 'date-fns-tz'
 
 export interface TimeSlot {
   startTime: Date

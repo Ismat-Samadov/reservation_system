@@ -43,11 +43,16 @@ reservation_system/
 │   └── utils.ts              # Utility functions
 ├── prisma/                   # Database schema
 │   └── schema.prisma         # Prisma schema with all models
+├── scripts/                  # Utility scripts
+│   └── seed.ts               # Database seeding script
+├── test/                     # Test files
+│   └── test-booking.ts       # Booking system tests
 ├── docs/                     # Documentation
 │   ├── ARCHITECTURE.md       # System architecture overview
 │   ├── DATABASE_SCHEMA.md    # Database design & SQL
 │   ├── API_DESIGN.md         # API endpoints & contracts
-│   └── BOOKING_ALGORITHM.md  # Concurrency control & time slots
+│   ├── BOOKING_ALGORITHM.md  # Concurrency control & time slots
+│   └── IMPLEMENTATION_GUIDE.md # Step-by-step implementation guide
 ├── public/                   # Static assets
 ├── .env.example              # Environment variables template
 ├── package.json              # Dependencies
