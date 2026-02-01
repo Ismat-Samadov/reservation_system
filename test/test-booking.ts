@@ -7,9 +7,9 @@
  * 3. Concurrency safety prevents double-booking
  */
 
-import { prisma } from './lib/prisma'
-import { getAvailableSlots } from './lib/availability'
-import { createBookingSafe } from './lib/booking'
+import { prisma } from '../lib/prisma'
+import { getAvailableSlots } from '../lib/availability'
+import { createBookingSafe } from '../lib/booking'
 
 async function main() {
   console.log('🧪 Testing Reservation System\n')

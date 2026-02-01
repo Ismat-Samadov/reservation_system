@@ -73,11 +73,11 @@ export async function getAvailableSlots(
     }
 
     // 4. Get start and end of day in provider's timezone (converted to UTC)
-    const dayStartUTC = zonedTimeToUtc(
+    const dayStartUTC = fromZonedTime(
       startOfDay(new Date(`${date}T00:00:00`)),
       providerTimezone
     )
-    const dayEndUTC = zonedTimeToUtc(
+    const dayEndUTC = fromZonedTime(
       endOfDay(new Date(`${date}T23:59:59`)),
       providerTimezone
     )
@@ -111,11 +111,11 @@ export async function getAvailableSlots(
       const [endHour, endMin] = rule.endTime.split(':').map(Number)
 
       // Create datetime objects in provider's timezone, then convert to UTC
-      const periodStart = zonedTimeToUtc(
+      const periodStart = fromZonedTime(
         new Date(`${date}T${rule.startTime}:00`),
         providerTimezone
       )
-      const periodEnd = zonedTimeToUtc(
+      const periodEnd = fromZonedTime(
         new Date(`${date}T${rule.endTime}:00`),
         providerTimezone
       )
@@ -151,8 +151,8 @@ export async function getAvailableSlots(
 
         // Add slot with availability status
         slots.push({
-          startTime: utcToZonedTime(currentSlotStart, customerTimezone),
-          endTime: utcToZonedTime(currentSlotEnd, customerTimezone),
+          startTime: toZonedTime(currentSlotStart, customerTimezone),
+          endTime: toZonedTime(currentSlotEnd, customerTimezone),
           available: !isBooked && !isBlocked && !isPast,
         })
 
