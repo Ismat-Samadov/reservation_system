@@ -1,0 +1,123 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Provider (Service Provider / Barber / Consultant / etc.)
+model Provider {
+  id            String   @id @default(uuid())
+  username      String   @unique
+  email         String   @unique
+  passwordHash  String   @map("password_hash")
+  fullName      String   @map("full_name")
+  businessName  String?  @map("business_name")
+  description   String?
+  timezone      String   @default("UTC")
+  avatarUrl     String?  @map("avatar_url")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  services        Service[]
+  availability    Availability[]
+  blockedPeriods  BlockedPeriod[] @relation("ProviderBlockedPeriods")
+  bookings        Booking[]
+
+  @@map("providers")
+}
+
+// Services offered by provider (e.g., Haircut, Consultation)
+model Service {
+  id                String   @id @default(uuid())
+  providerId        String   @map("provider_id")
+  name              String
+  description       String?
+  durationMinutes   Int      @map("duration_minutes")
+  price             Decimal? @db.Decimal(10, 2)
+  currency          String   @default("USD")
+  bufferTimeMinutes Int      @default(0) @map("buffer_time_minutes")
+  isActive          Boolean  @default(true) @map("is_active")
+  displayOrder      Int      @default(0) @map("display_order")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  provider Provider  @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  bookings Booking[]
+
+  @@index([providerId])
+  @@index([providerId, isActive])
+  @@map("services")
+}
+
+// Weekly availability schedule (e.g., Monday 9AM-5PM)
+model Availability {
+  id          String   @id @default(uuid())
+  providerId  String   @map("provider_id")
+  dayOfWeek   Int      @map("day_of_week") // 0=Sunday, 6=Saturday
+  startTime   String   @map("start_time") // Time stored as HH:MM
+  endTime     String   @map("end_time") // Time stored as HH:MM
+  isAvailable Boolean  @default(true) @map("is_available")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  provider Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, dayOfWeek, startTime, endTime])
+  @@index([providerId, dayOfWeek])
+  @@map("availability")
+}
+
+// Blocked periods (vacations, breaks, specific unavailable times)
+model BlockedPeriod {
+  id            String   @id @default(uuid())
+  providerId    String   @map("provider_id")
+  startDatetime DateTime @map("start_datetime")
+  endDatetime   DateTime @map("end_datetime")
+  reason        String?
+  isRecurring   Boolean  @default(false) @map("is_recurring")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  provider Provider @relation("ProviderBlockedPeriods", fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@index([providerId, startDatetime, endDatetime])
+  @@map("blocked_periods")
+}
+
+// Bookings / Appointments
+model Booking {
+  id                 String    @id @default(uuid())
+  providerId         String    @map("provider_id")
+  serviceId          String    @map("service_id")
+  customerName       String    @map("customer_name")
+  customerEmail      String    @map("customer_email")
+  customerPhone      String?   @map("customer_phone")
+  customerTimezone   String    @default("UTC") @map("customer_timezone")
+  startTime          DateTime  @map("start_time") // Always stored in UTC
+  endTime            DateTime  @map("end_time") // Always stored in UTC
+  status             String    @default("confirmed") // pending, confirmed, cancelled, completed, no_show
+  notes              String?
+  cancellationReason String?   @map("cancellation_reason")
+  version            Int       @default(1) // For optimistic locking
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
+  confirmedAt        DateTime? @map("confirmed_at")
+  cancelledAt        DateTime? @map("cancelled_at")
+
+  provider Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  service  Service  @relation(fields: [serviceId], references: [id], onDelete: Restrict)
+
+  // CRITICAL: Prevent double-booking
+  // This unique index ensures no two active bookings can have same start time for same provider
+  @@unique([providerId, startTime], name: "no_double_booking")
+  @@index([providerId, startTime, endTime])
+  @@index([customerEmail])
+  @@index([providerId, status])
+  @@map("bookings")
+}
