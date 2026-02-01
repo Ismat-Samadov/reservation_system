@@ -107,9 +107,6 @@ export async function getAvailableSlots(
     const slots: TimeSlot[] = []
 
     for (const rule of availabilityRules) {
-      const [startHour, startMin] = rule.startTime.split(':').map(Number)
-      const [endHour, endMin] = rule.endTime.split(':').map(Number)
-
       // Create datetime objects in provider's timezone, then convert to UTC
       const periodStart = fromZonedTime(
         new Date(`${date}T${rule.startTime}:00`),
