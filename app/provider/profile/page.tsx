@@ -6,8 +6,20 @@ import { Button } from '@/components/ui/button'
 import { ArrowLeft, Mail, Phone, MapPin, Clock } from 'lucide-react'
 import Link from 'next/link'
 
+interface Provider {
+  id: string
+  fullName: string
+  email: string
+  phone: string
+  businessName: string
+  businessAddress: string
+  timezone: string
+  avatarUrl: string | null
+  bio: string
+}
+
 // TODO: Replace with actual session data from NextAuth
-const MOCK_PROVIDER = {
+const MOCK_PROVIDER: Provider = {
   id: '00000000-0000-0000-0000-000000000001', // Replace with actual provider ID
   fullName: 'John Doe',
   email: 'johndoe@example.com',
@@ -20,7 +32,7 @@ const MOCK_PROVIDER = {
 }
 
 export default function ProviderProfilePage() {
-  const [provider, setProvider] = useState(MOCK_PROVIDER)
+  const [provider, setProvider] = useState<Provider>(MOCK_PROVIDER)
 
   const handleAvatarUpload = (url: string) => {
     setProvider((prev) => ({ ...prev, avatarUrl: url }))
