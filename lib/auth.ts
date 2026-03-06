@@ -35,6 +35,7 @@ export const authOptions: NextAuthOptions = {
 
         return {
           id: provider.id,
+          username: provider.username,
           email: provider.email,
           name: provider.fullName,
           image: provider.avatarUrl || undefined,
@@ -52,12 +53,22 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id
+        token.username = (user as any).username
+      }
+      // Backfill username for existing sessions that don't have it
+      if (!token.username && token.id) {
+        const provider = await prisma.provider.findUnique({
+          where: { id: token.id as string },
+          select: { username: true },
+        })
+        token.username = provider?.username ?? ''
       }
       return token
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string
+        session.user.username = token.username as string
       }
       return session
     },

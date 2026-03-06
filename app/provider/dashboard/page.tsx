@@ -112,7 +112,7 @@ export default function ProviderDashboard() {
       <header className="border-b bg-white/80 backdrop-blur-sm">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/">
+            <Link href="/provider/dashboard">
               <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 BookEasy
               </h1>
@@ -250,7 +250,7 @@ export default function ProviderDashboard() {
               variant="outline"
               className="w-full bg-white/20 border-white/30 text-white hover:bg-white/30"
               onClick={() => {
-                const url = `${window.location.origin}/book/${session?.user?.email?.split('@')[0]}`
+                const url = `${window.location.origin}/book/${session?.user?.username}`
                 navigator.clipboard.writeText(url)
                 alert('Booking link copied to clipboard!')
               }}
@@ -378,7 +378,7 @@ export default function ProviderDashboard() {
               Share this link with your clients
             </p>
             <div className="bg-white/20 rounded-lg p-2 text-sm break-all">
-              {`${window.location.origin}/book/${session.user?.email?.split('@')[0]}`}
+              {typeof window !== 'undefined' ? `${window.location.origin}/book/${session.user?.username}` : `/book/${session.user?.username}`}
             </div>
           </div>
         </div>
