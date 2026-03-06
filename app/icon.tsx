@@ -1,49 +1,63 @@
 import { ImageResponse } from 'next/og'
 
-// Route segment config
 export const runtime = 'edge'
-
-// Image metadata
-export const size = {
-  width: 32,
-  height: 32,
-}
-
+export const size = { width: 32, height: 32 }
 export const contentType = 'image/png'
 
-// Image generation
 export default function Icon() {
   return new ImageResponse(
     (
       <div
         style={{
-          fontSize: 24,
           background: 'linear-gradient(135deg, #2563eb 0%, #4f46e5 100%)',
           width: '100%',
           height: '100%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: 'white',
-          fontWeight: 'bold',
-          borderRadius: '6px',
-          position: 'relative',
+          borderRadius: '7px',
         }}
       >
-        R
-        <div style={{
-          position: 'absolute',
-          top: '3px',
-          right: '3px',
-          width: '8px',
-          height: '8px',
-          borderRadius: '50%',
-          background: '#bfdbfe',
-        }} />
+        {/* Calendar icon simplified for 32px */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '2px',
+          }}
+        >
+          <div
+            style={{
+              width: '18px',
+              height: '16px',
+              background: 'white',
+              borderRadius: '2px',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+            }}
+          >
+            <div style={{ height: '5px', background: 'rgba(255,255,255,0.35)', display: 'flex' }} />
+            <div
+              style={{
+                flex: 1,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '2px',
+                paddingTop: '1px',
+              }}
+            >
+              <div style={{ width: '3px', height: '3px', borderRadius: '50%', background: '#2563eb' }} />
+              <div style={{ width: '3px', height: '3px', borderRadius: '50%', background: '#2563eb' }} />
+              <div style={{ width: '3px', height: '3px', borderRadius: '50%', background: '#c7d2fe' }} />
+            </div>
+          </div>
+        </div>
       </div>
     ),
-    {
-      ...size,
-    }
+    { ...size }
   )
 }
