@@ -147,7 +147,7 @@ export function AvatarUpload({
   return (
     <div className="flex flex-col items-center gap-4">
       <div className="relative">
-        <Avatar className="h-32 w-32">
+        <Avatar key={avatarUrl ?? 'empty'} className="h-32 w-32">
           <AvatarImage src={avatarUrl || undefined} alt={providerName} />
           <AvatarFallback className="bg-blue-100 text-blue-600 text-3xl">
             {getInitials()}
