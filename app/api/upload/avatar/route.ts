@@ -1,24 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 import { uploadToR2, generateAvatarKey, deleteFromR2 } from '@/lib/r2'
 import { prisma } from '@/lib/prisma'
 
-/**
- * Upload Avatar API Route
- * POST /api/upload/avatar
- *
- * Handles profile picture uploads to Cloudflare R2
- */
 export async function POST(req: NextRequest) {
   try {
-    // TODO: Add authentication check here
-    // const session = await getServerSession(authOptions)
-    // if (!session?.user?.id) {
-    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    // }
+    const session = await getServerSession(authOptions)
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
 
     const formData = await req.formData()
     const file = formData.get('file') as File
-    const providerId = formData.get('providerId') as string
 
     if (!file) {
       return NextResponse.json(
@@ -27,12 +21,8 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    if (!providerId) {
-      return NextResponse.json(
-        { error: 'Provider ID is required' },
-        { status: 400 }
-      )
-    }
+    // Always use the authenticated provider's own ID — ignore any client-supplied providerId
+    const providerId = session.user.id
 
     // Validate file type
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
@@ -98,23 +88,14 @@ export async function POST(req: NextRequest) {
   }
 }
 
-/**
- * Delete Avatar
- * DELETE /api/upload/avatar
- */
 export async function DELETE(req: NextRequest) {
   try {
-    // TODO: Add authentication check
-
-    const { searchParams } = new URL(req.url)
-    const providerId = searchParams.get('providerId')
-
-    if (!providerId) {
-      return NextResponse.json(
-        { error: 'Provider ID is required' },
-        { status: 400 }
-      )
+    const session = await getServerSession(authOptions)
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
+
+    const providerId = session.user.id
 
     // Get current avatar URL
     const provider = await prisma.provider.findUnique({

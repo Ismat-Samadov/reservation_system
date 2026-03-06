@@ -12,13 +12,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const provider = await prisma.provider.findUnique({
-      where: { email: session.user.email },
-    })
-
-    if (!provider) {
-      return NextResponse.json({ error: 'Provider not found' }, { status: 404 })
-    }
+    const providerId = session.user.id
 
     const now = new Date()
     const todayStart = startOfDay(now)
@@ -29,7 +23,7 @@ export async function GET(req: NextRequest) {
     // Today's bookings
     const todayBookings = await prisma.booking.count({
       where: {
-        providerId: provider.id,
+        providerId,
         startTime: {
           gte: todayStart,
           lte: todayEnd,
@@ -43,7 +37,7 @@ export async function GET(req: NextRequest) {
     // Upcoming bookings (future)
     const upcomingBookings = await prisma.booking.count({
       where: {
-        providerId: provider.id,
+        providerId,
         startTime: {
           gt: now,
         },
@@ -54,7 +48,7 @@ export async function GET(req: NextRequest) {
     // Total bookings this month
     const monthlyBookings = await prisma.booking.count({
       where: {
-        providerId: provider.id,
+        providerId,
         startTime: {
           gte: monthStart,
           lte: monthEnd,
@@ -68,7 +62,7 @@ export async function GET(req: NextRequest) {
     // Revenue this month
     const monthlyRevenue = await prisma.booking.findMany({
       where: {
-        providerId: provider.id,
+        providerId,
         startTime: {
           gte: monthStart,
           lte: monthEnd,
@@ -94,7 +88,7 @@ export async function GET(req: NextRequest) {
     // Active services
     const activeServices = await prisma.service.count({
       where: {
-        providerId: provider.id,
+        providerId,
         isActive: true,
       },
     })
@@ -102,7 +96,7 @@ export async function GET(req: NextRequest) {
     // Cancellation rate
     const totalBookings = await prisma.booking.count({
       where: {
-        providerId: provider.id,
+        providerId,
         startTime: {
           gte: monthStart,
           lte: monthEnd,
@@ -112,7 +106,7 @@ export async function GET(req: NextRequest) {
 
     const cancelledBookings = await prisma.booking.count({
       where: {
-        providerId: provider.id,
+        providerId,
         startTime: {
           gte: monthStart,
           lte: monthEnd,

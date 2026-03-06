@@ -58,11 +58,16 @@ export const authOptions: NextAuthOptions = {
       }
       // Backfill username for existing sessions that don't have it
       if (!token.username && token.id) {
-        const provider = await prisma.provider.findUnique({
-          where: { id: token.id as string },
-          select: { username: true },
-        })
-        token.username = provider?.username ?? ''
+        try {
+          const provider = await prisma.provider.findUnique({
+            where: { id: token.id as string },
+            select: { username: true },
+          })
+          token.username = provider?.username ?? ''
+        } catch {
+          // DB unavailable — keep token valid, username will be empty
+          token.username = ''
+        }
       }
       return token
     },

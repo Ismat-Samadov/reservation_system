@@ -35,9 +35,12 @@ export async function uploadToR2(
 
   await r2Client.send(command)
 
-  // Return the public URL
-  // For production, you should set up a custom domain for your R2 bucket
-  return `https://pub-${process.env.R2_ACCOUNT_ID}.r2.dev/${key}`
+  // Return the public URL.
+  // Set R2_PUBLIC_URL in env to your bucket's public base URL, e.g.:
+  //   https://pub-abc123.r2.dev  (R2.dev subdomain, NOT the account ID)
+  //   https://assets.yourdomain.com  (custom domain)
+  const base = (process.env.R2_PUBLIC_URL ?? '').replace(/\/$/, '')
+  return `${base}/${key}`
 }
 
 /**

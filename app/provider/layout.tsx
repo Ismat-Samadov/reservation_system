@@ -32,7 +32,7 @@ function ProviderShell({ children }: { children: React.ReactNode }) {
         email={session.user?.email ?? ''}
         username={session.user?.username ?? ''}
       />
-      <div className="ml-60 flex-1 min-h-screen">
+      <div className="lg:ml-60 pt-14 lg:pt-0 flex-1 min-h-screen">
         {children}
       </div>
     </div>

@@ -11,17 +11,9 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const provider = await prisma.provider.findUnique({
-      where: { email: session.user.email },
-    })
-
-    if (!provider) {
-      return NextResponse.json({ error: 'Provider not found' }, { status: 404 })
-    }
-
     const recentBookings = await prisma.booking.findMany({
       where: {
-        providerId: provider.id,
+        providerId: session.user.id,
       },
       include: {
         service: {

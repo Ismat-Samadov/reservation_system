@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { signOut } from 'next-auth/react'
@@ -11,6 +12,8 @@ import {
   UserCircle,
   LogOut,
   ExternalLink,
+  Menu,
+  X,
 } from 'lucide-react'
 
 const NAV = [
@@ -29,6 +32,7 @@ interface Props {
 
 export default function ProviderSidebar({ name, email, username }: Props) {
   const pathname = usePathname()
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   const initials = name
     .split(' ')
@@ -37,11 +41,11 @@ export default function ProviderSidebar({ name, email, username }: Props) {
     .toUpperCase()
     .slice(0, 2)
 
-  return (
-    <aside className="w-60 bg-gray-950 min-h-screen flex flex-col fixed left-0 top-0 z-20 border-r border-gray-800">
+  const navContent = (
+    <>
       {/* Logo */}
       <div className="px-5 py-5 border-b border-gray-800">
-        <Link href="/provider/dashboard" className="block">
+        <Link href="/provider/dashboard" className="block" onClick={() => setMobileOpen(false)}>
           <span className="text-xl font-bold text-white tracking-tight">Randevu</span>
         </Link>
         <p className="text-gray-500 text-xs mt-0.5">Provider Portal</p>
@@ -55,6 +59,7 @@ export default function ProviderSidebar({ name, email, username }: Props) {
             <Link
               key={href}
               href={href}
+              onClick={() => setMobileOpen(false)}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
                 active
                   ? 'bg-blue-600 text-white shadow-sm'
@@ -97,6 +102,42 @@ export default function ProviderSidebar({ name, email, username }: Props) {
           Sign Out
         </button>
       </div>
-    </aside>
+    </>
+  )
+
+  return (
+    <>
+      {/* Desktop sidebar */}
+      <aside className="w-60 bg-gray-950 min-h-screen flex-col fixed left-0 top-0 z-20 border-r border-gray-800 hidden lg:flex">
+        {navContent}
+      </aside>
+
+      {/* Mobile top bar */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-30 bg-gray-950 border-b border-gray-800 flex items-center justify-between px-4 py-3">
+        <Link href="/provider/dashboard">
+          <span className="text-lg font-bold text-white tracking-tight">Randevu</span>
+        </Link>
+        <button
+          onClick={() => setMobileOpen((v) => !v)}
+          className="text-gray-400 hover:text-white transition-colors"
+          aria-label="Toggle menu"
+        >
+          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+      </div>
+
+      {/* Mobile drawer */}
+      {mobileOpen && (
+        <div className="lg:hidden fixed inset-0 z-20" onClick={() => setMobileOpen(false)}>
+          <div className="absolute inset-0 bg-black/50" />
+          <aside
+            className="absolute left-0 top-0 bottom-0 w-60 bg-gray-950 flex flex-col border-r border-gray-800"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {navContent}
+          </aside>
+        </div>
+      )}
+    </>
   )
 }

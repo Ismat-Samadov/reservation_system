@@ -21,10 +21,12 @@ export function AvatarUpload({
   onDeleteSuccess,
 }: AvatarUploadProps) {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(currentAvatarUrl || null)
+  const [imgError, setImgError] = useState(false)
   const [uploading, setUploading] = useState(false)
 
   useEffect(() => {
     setAvatarUrl(currentAvatarUrl || null)
+    setImgError(false)
   }, [currentAvatarUrl])
   const [deleting, setDeleting] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -75,6 +77,7 @@ export function AvatarUpload({
       }
 
       setAvatarUrl(data.data.url)
+      setImgError(false)
       onUploadSuccess?.(data.data.url)
 
       toast({
@@ -147,12 +150,13 @@ export function AvatarUpload({
     <div className="flex flex-col items-center gap-4">
       <div className="relative">
         <div className="h-32 w-32 rounded-full overflow-hidden bg-blue-100 flex items-center justify-center ring-4 ring-white shadow">
-          {avatarUrl ? (
+          {avatarUrl && !imgError ? (
             <img
               key={avatarUrl}
               src={avatarUrl}
               alt={providerName}
               className="h-full w-full object-cover"
+              onError={() => setImgError(true)}
             />
           ) : (
             <span className="text-blue-600 text-3xl font-semibold select-none">
