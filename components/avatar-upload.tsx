@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Camera, Loader2, Trash2, User } from 'lucide-react'
@@ -23,6 +23,10 @@ export function AvatarUpload({
 }: AvatarUploadProps) {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(currentAvatarUrl || null)
   const [uploading, setUploading] = useState(false)
+
+  useEffect(() => {
+    setAvatarUrl(currentAvatarUrl || null)
+  }, [currentAvatarUrl])
   const [deleting, setDeleting] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const { toast } = useToast()
