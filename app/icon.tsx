@@ -27,9 +27,19 @@ export default function Icon() {
           color: 'white',
           fontWeight: 'bold',
           borderRadius: '6px',
+          position: 'relative',
         }}
       >
-        B
+        R
+        <div style={{
+          position: 'absolute',
+          top: '3px',
+          right: '3px',
+          width: '8px',
+          height: '8px',
+          borderRadius: '50%',
+          background: '#bfdbfe',
+        }} />
       </div>
     ),
     {

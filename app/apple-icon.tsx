@@ -27,9 +27,19 @@ export default function AppleIcon() {
           color: 'white',
           fontWeight: 'bold',
           borderRadius: '40px',
+          position: 'relative',
         }}
       >
-        B
+        R
+        <div style={{
+          position: 'absolute',
+          top: '14px',
+          right: '14px',
+          width: '28px',
+          height: '28px',
+          borderRadius: '50%',
+          background: '#bfdbfe',
+        }} />
       </div>
     ),
     {
