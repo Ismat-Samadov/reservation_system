@@ -138,7 +138,7 @@ export default function ProviderDashboard() {
   return (
     <div className="min-h-screen">
       {/* Top bar */}
-      <header className="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between sticky top-0 z-10">
+      <header className="bg-white border-b border-gray-200 px-4 sm:px-8 py-4 flex items-center justify-between sticky top-0 z-10">
         <div>
           <h1 className="text-lg font-semibold text-gray-900">Dashboard</h1>
           <p className="text-xs text-gray-400 mt-0.5">{format(new Date(), 'EEEE, MMMM d, yyyy')}</p>
@@ -157,9 +157,9 @@ export default function ProviderDashboard() {
         </div>
       </header>
 
-      <main className="p-8">
+      <main className="p-4 sm:p-8">
         {/* Stats row */}
-        <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
           <StatCard
             title="Today's Bookings"
             value={loading ? '—' : stats.todayBookings}
@@ -197,7 +197,7 @@ export default function ProviderDashboard() {
         </div>
 
         {/* Main content grid */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6">
           {/* Recent Bookings table */}
           <div className="xl:col-span-2 bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">

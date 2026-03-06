@@ -98,7 +98,7 @@ export default function AvailabilityPage() {
 
   return (
     <div className="min-h-screen">
-      <header className="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between sticky top-0 z-10">
+      <header className="bg-white border-b border-gray-200 px-4 sm:px-8 py-4 flex items-center justify-between sticky top-0 z-10">
         <div>
           <h1 className="text-lg font-semibold text-gray-900">Availability</h1>
           <p className="text-xs text-gray-400 mt-0.5">Set your working hours for each day</p>
@@ -120,7 +120,7 @@ export default function AvailabilityPage() {
         </Button>
       </header>
 
-      <main className="p-8">
+      <main className="p-4 sm:p-8">
         <div className="max-w-2xl">
           {error && (
             <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800 text-sm">
@@ -142,7 +142,7 @@ export default function AvailabilityPage() {
               {schedule.map((day) => (
                 <div
                   key={day.dayOfWeek}
-                  className={`flex items-center gap-4 p-4 transition-colors ${
+                  className={`flex flex-wrap sm:flex-nowrap items-center gap-3 p-4 transition-colors ${
                     !day.isAvailable ? 'opacity-50 bg-gray-50/50' : ''
                   }`}
                 >
@@ -158,19 +158,19 @@ export default function AvailabilityPage() {
                   </label>
 
                   {/* Day Name */}
-                  <div className="w-28 flex-shrink-0">
+                  <div className="w-24 flex-shrink-0">
                     <p className="text-sm font-medium text-gray-900">{DAYS[day.dayOfWeek]}</p>
                     {!day.isAvailable && <p className="text-xs text-gray-400">Closed</p>}
                   </div>
 
                   {/* Time Inputs */}
-                  <div className="flex items-center gap-2 flex-1">
+                  <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
                     <input
                       type="time"
                       value={day.startTime}
                       disabled={!day.isAvailable}
                       onChange={(e) => updateDay(day.dayOfWeek, 'startTime', e.target.value)}
-                      className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      className="w-32 px-2 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none disabled:bg-gray-100 disabled:cursor-not-allowed"
                     />
                     <span className="text-gray-400 text-sm">to</span>
                     <input
@@ -178,7 +178,7 @@ export default function AvailabilityPage() {
                       value={day.endTime}
                       disabled={!day.isAvailable}
                       onChange={(e) => updateDay(day.dayOfWeek, 'endTime', e.target.value)}
-                      className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      className="w-32 px-2 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none disabled:bg-gray-100 disabled:cursor-not-allowed"
                     />
                   </div>
                 </div>

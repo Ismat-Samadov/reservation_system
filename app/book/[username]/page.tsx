@@ -207,7 +207,7 @@ export default function PublicBookingPage() {
         </div>
       </header>
 
-      <main className="container mx-auto px-6 py-12">
+      <main className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-2xl mx-auto">
 
           {/* Provider Card */}
@@ -317,7 +317,7 @@ export default function PublicBookingPage() {
                 Service: <span className="font-medium text-gray-700">{selectedService.name}</span>
               </p>
 
-              <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
+              <div className="grid grid-cols-5 sm:grid-cols-7 gap-2">
                 {dateOptions.map((date) => {
                   const isToday = format(date, 'yyyy-MM-dd') === format(today, 'yyyy-MM-dd')
                   const isPast = isBefore(date, today)

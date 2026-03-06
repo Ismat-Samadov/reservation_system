@@ -123,12 +123,12 @@ export default function ProviderProfilePage() {
 
   return (
     <div className="min-h-screen">
-      <header className="bg-white border-b border-gray-200 px-8 py-4 sticky top-0 z-10">
+      <header className="bg-white border-b border-gray-200 px-4 sm:px-8 py-4 sticky top-0 z-10">
         <h1 className="text-lg font-semibold text-gray-900">Profile</h1>
         <p className="text-xs text-gray-400 mt-0.5">Manage your public profile and account settings</p>
       </header>
 
-      <main className="p-8">
+      <main className="p-4 sm:p-8">
         <div className="max-w-2xl space-y-6">
           {success && (
             <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 text-sm">

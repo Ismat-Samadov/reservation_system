@@ -143,7 +143,7 @@ export default function ServicesPage() {
 
   return (
     <div className="min-h-screen">
-      <header className="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between sticky top-0 z-10">
+      <header className="bg-white border-b border-gray-200 px-4 sm:px-8 py-4 flex items-center justify-between sticky top-0 z-10">
         <div>
           <h1 className="text-lg font-semibold text-gray-900">Services</h1>
           <p className="text-xs text-gray-400 mt-0.5">Manage the services you offer to clients</p>
@@ -156,7 +156,7 @@ export default function ServicesPage() {
         )}
       </header>
 
-      <main className="p-8">
+      <main className="p-4 sm:p-8">
         <div className="max-w-3xl">
           {error && (
             <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800 text-sm">

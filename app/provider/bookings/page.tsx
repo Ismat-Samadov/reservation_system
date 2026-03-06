@@ -79,12 +79,12 @@ export default function BookingsPage() {
 
   return (
     <div className="min-h-screen">
-      <header className="bg-white border-b border-gray-200 px-8 py-4 sticky top-0 z-10">
+      <header className="bg-white border-b border-gray-200 px-4 sm:px-8 py-4 sticky top-0 z-10">
         <h1 className="text-lg font-semibold text-gray-900">Bookings</h1>
         <p className="text-xs text-gray-400 mt-0.5">View and manage your appointments</p>
       </header>
 
-      <main className="p-8">
+      <main className="p-4 sm:p-8">
         {/* Tabs */}
         <div className="flex gap-1 mb-6 bg-gray-100 rounded-lg p-1 w-fit">
           {TABS.map(({ key, label }) => (
