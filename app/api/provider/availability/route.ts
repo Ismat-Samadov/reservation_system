@@ -47,7 +47,7 @@ export async function PUT(req: NextRequest) {
       }
     }
 
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx: any) => {
       await tx.availability.deleteMany({ where: { providerId: session.user.id } })
 
       const active = schedule.filter((s: any) => s.isAvailable)
