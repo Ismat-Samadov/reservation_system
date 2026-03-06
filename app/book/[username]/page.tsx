@@ -326,14 +326,14 @@ export default function PublicBookingPage() {
                       key={date.toISOString()}
                       onClick={() => !isPast && handleSelectDate(date)}
                       disabled={isPast}
-                      className={`p-3 rounded-xl text-center border transition-all ${
+                      className={`py-2 px-1 rounded-xl text-center border transition-all ${
                         isPast
                           ? 'bg-gray-50 border-gray-100 text-gray-300 cursor-not-allowed'
                           : 'bg-white border-gray-200 hover:border-blue-400 hover:shadow-sm cursor-pointer'
                       }`}
                     >
                       <div className="text-xs text-gray-500">{format(date, 'EEE')}</div>
-                      <div className={`text-lg font-bold mt-0.5 ${isToday ? 'text-blue-600' : 'text-gray-900'}`}>
+                      <div className={`text-base font-bold mt-0.5 ${isToday ? 'text-blue-600' : 'text-gray-900'}`}>
                         {format(date, 'd')}
                       </div>
                       <div className="text-xs text-gray-500">{format(date, 'MMM')}</div>
@@ -376,7 +376,7 @@ export default function PublicBookingPage() {
                   </Button>
                 </div>
               ) : (
-                <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2">
                   {slots.map((slot) => (
                     <button
                       key={slot.startTime}

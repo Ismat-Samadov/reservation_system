@@ -69,7 +69,7 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 py-12 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 py-8 px-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
@@ -82,7 +82,7 @@ export default function SignUpPage() {
         </div>
 
         {/* Sign Up Form */}
-        <div className="bg-white rounded-xl shadow-lg p-8">
+        <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
               <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
