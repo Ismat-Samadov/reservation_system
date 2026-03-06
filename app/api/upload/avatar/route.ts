@@ -115,9 +115,13 @@ export async function DELETE(req: NextRequest) {
       )
     }
 
-    // Extract key from URL
-    const url = new URL(provider.avatarUrl)
-    const key = url.pathname.substring(1) // Remove leading slash
+    // Extract key from URL — handle both absolute URLs and legacy relative paths
+    let key: string
+    try {
+      key = new URL(provider.avatarUrl).pathname.substring(1)
+    } catch {
+      key = provider.avatarUrl.startsWith('/') ? provider.avatarUrl.substring(1) : provider.avatarUrl
+    }
 
     // Delete from R2
     await deleteFromR2(key)
