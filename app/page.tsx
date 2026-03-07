@@ -147,24 +147,26 @@ export default function Home() {
             <p className="text-lg text-gray-500">Get your booking page live before your next coffee break</p>
           </div>
 
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-2xl mx-auto">
             {[
               { n: 1, title: 'Create Your Account', desc: 'Sign up with your email in seconds. No credit card required for the trial.', color: 'from-blue-500 to-blue-600' },
               { n: 2, title: 'Set Your Services & Hours', desc: 'Define your working hours, services, pricing, and buffer times between appointments.', color: 'from-violet-500 to-violet-600' },
               { n: 3, title: 'Share Your Booking Link', desc: 'Get a personalized page (randevu.app/yourname) to share on social media or your website.', color: 'from-emerald-500 to-emerald-600' },
               { n: 4, title: 'Accept Bookings 24/7', desc: 'Clients book online anytime. Your dashboard stays organized with all appointments in one place.', color: 'from-orange-500 to-orange-600' },
             ].map(({ n, title, desc, color }, i) => (
-              <div key={n} className="flex items-start gap-6 mb-8 last:mb-0">
-                <div className={`flex-shrink-0 w-12 h-12 bg-gradient-to-br ${color} text-white rounded-2xl flex items-center justify-center text-lg font-extrabold shadow-md`}>
-                  {n}
+              <div key={n} className="flex gap-5">
+                {/* Left column: number + connector line */}
+                <div className="flex flex-col items-center">
+                  <div className={`flex-shrink-0 w-11 h-11 bg-gradient-to-br ${color} text-white rounded-2xl flex items-center justify-center text-base font-extrabold shadow-md`}>
+                    {n}
+                  </div>
+                  {i < 3 && <div className="w-px flex-1 bg-gray-200 my-2" />}
                 </div>
-                <div className="pt-2 flex-1">
+                {/* Right column: text */}
+                <div className={`pb-8 pt-1 flex-1 ${i === 3 ? 'pb-0' : ''}`}>
                   <h3 className="text-lg font-bold text-gray-900 mb-1">{title}</h3>
                   <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
                 </div>
-                {i < 3 && (
-                  <div className="hidden sm:block flex-shrink-0 pt-14 pl-6 absolute ml-6 h-8 w-px bg-gray-200" />
-                )}
               </div>
             ))}
           </div>
