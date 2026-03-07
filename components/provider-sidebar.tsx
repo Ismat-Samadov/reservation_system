@@ -14,15 +14,16 @@ import {
   ExternalLink,
   Menu,
   X,
+  BarChart2,
 } from 'lucide-react'
 
-
 const NAV = [
-  { href: '/provider/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-  { href: '/provider/bookings', icon: Calendar, label: 'Bookings' },
-  { href: '/provider/services', icon: Settings2, label: 'Services' },
-  { href: '/provider/availability', icon: Clock, label: 'Availability' },
-  { href: '/provider/profile', icon: UserCircle, label: 'Profile' },
+  { href: '/provider/dashboard',  icon: LayoutDashboard, label: 'Dashboard' },
+  { href: '/provider/bookings',   icon: Calendar,        label: 'Bookings' },
+  { href: '/provider/analytics',  icon: BarChart2,       label: 'Analytics' },
+  { href: '/provider/services',   icon: Settings2,       label: 'Services' },
+  { href: '/provider/availability', icon: Clock,         label: 'Availability' },
+  { href: '/provider/profile',    icon: UserCircle,      label: 'Profile' },
 ]
 
 interface Props {
