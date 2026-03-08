@@ -138,7 +138,7 @@ function SignInForm() {
               Demo Credentials:
             </p>
             <p className="text-xs text-blue-700">
-              Email: johndoe@example.com
+              Email: john@example.com
               <br />
               Password: password123
             </p>
