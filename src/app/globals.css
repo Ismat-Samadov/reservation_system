@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+/* ── Base reset ──────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: #020212;
+  color: #e0e0ff;
+  font-family: var(--font-mono), 'Courier New', monospace;
+  /* Prevent text selection during gameplay */
+  user-select: none;
+  -webkit-user-select: none;
+  /* Disable iOS tap highlight */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent pull-to-refresh on mobile */
+body {
+  overscroll-behavior: none;
+}
+
+/* Smooth font rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Custom scrollbar (for any scrollable areas) ─────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #020212;
+}
+::-webkit-scrollbar-thumb {
+  background: #00ffff44;
+  border-radius: 2px;
+}
+
+/* ── Neon glow utility classes ───────────────────────────────────────────── */
+.glow-cyan {
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.6), 0 0 30px rgba(0, 255, 255, 0.3);
+}
+.glow-magenta {
+  text-shadow: 0 0 10px rgba(255, 0, 255, 0.6), 0 0 30px rgba(255, 0, 255, 0.3);
+}
+.glow-green {
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.6), 0 0 30px rgba(0, 255, 136, 0.3);
+}
+
+/* ── Canvas fill ─────────────────────────────────────────────────────────── */
+canvas {
+  display: block;
+  touch-action: none; /* prevent scroll on touch */
+}
